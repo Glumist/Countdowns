@@ -59,6 +59,7 @@
             // 
             pbProgress.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pbProgress.Location = new Point(458, 11);
+            pbProgress.Maximum = 10000;
             pbProgress.Name = "pbProgress";
             pbProgress.Size = new Size(216, 34);
             pbProgress.TabIndex = 2;
@@ -79,6 +80,7 @@
             tbTimeLeft.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             tbTimeLeft.Location = new Point(791, 10);
             tbTimeLeft.Name = "tbTimeLeft";
+            tbTimeLeft.ReadOnly = true;
             tbTimeLeft.Size = new Size(86, 31);
             tbTimeLeft.TabIndex = 8;
             tbTimeLeft.TextAlign = HorizontalAlignment.Right;
@@ -88,6 +90,7 @@
             tbEndTime.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             tbEndTime.Location = new Point(680, 11);
             tbEndTime.Name = "tbEndTime";
+            tbEndTime.ReadOnly = true;
             tbEndTime.Size = new Size(105, 31);
             tbEndTime.TabIndex = 9;
             tbEndTime.TextAlign = HorizontalAlignment.Right;

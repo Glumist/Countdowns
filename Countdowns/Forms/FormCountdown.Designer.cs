@@ -45,11 +45,11 @@
             nudDecrease = new NumericUpDown();
             label5 = new Label();
             gbBlink = new GroupBox();
-            rbAfterEnd = new RadioButton();
-            rbWhileCounting = new RadioButton();
-            rbBeforeEnd = new RadioButton();
-            rbBeforeAndAfterEnd = new RadioButton();
             nudBlinkMinutes = new NumericUpDown();
+            rbBeforeAndAfterEnd = new RadioButton();
+            rbBeforeEnd = new RadioButton();
+            rbWhileCounting = new RadioButton();
+            rbAfterEnd = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)nudHours).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudMinutes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudDecrease).BeginInit();
@@ -205,38 +205,13 @@
             gbBlink.TabStop = false;
             gbBlink.Text = "Мерцание";
             // 
-            // rbAfterEnd
+            // nudBlinkMinutes
             // 
-            rbAfterEnd.AutoSize = true;
-            rbAfterEnd.Location = new Point(15, 30);
-            rbAfterEnd.Name = "rbAfterEnd";
-            rbAfterEnd.Size = new Size(181, 29);
-            rbAfterEnd.TabIndex = 0;
-            rbAfterEnd.TabStop = true;
-            rbAfterEnd.Text = "После окончания";
-            rbAfterEnd.UseVisualStyleBackColor = true;
-            // 
-            // rbWhileCounting
-            // 
-            rbWhileCounting.AutoSize = true;
-            rbWhileCounting.Location = new Point(214, 30);
-            rbWhileCounting.Name = "rbWhileCounting";
-            rbWhileCounting.Size = new Size(135, 29);
-            rbWhileCounting.TabIndex = 1;
-            rbWhileCounting.TabStop = true;
-            rbWhileCounting.Text = "Пока тикает";
-            rbWhileCounting.UseVisualStyleBackColor = true;
-            // 
-            // rbBeforeEnd
-            // 
-            rbBeforeEnd.AutoSize = true;
-            rbBeforeEnd.Location = new Point(15, 65);
-            rbBeforeEnd.Name = "rbBeforeEnd";
-            rbBeforeEnd.Size = new Size(196, 29);
-            rbBeforeEnd.TabIndex = 2;
-            rbBeforeEnd.TabStop = true;
-            rbBeforeEnd.Text = "Перед окончанием";
-            rbBeforeEnd.UseVisualStyleBackColor = true;
+            nudBlinkMinutes.Location = new Point(468, 63);
+            nudBlinkMinutes.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            nudBlinkMinutes.Name = "nudBlinkMinutes";
+            nudBlinkMinutes.Size = new Size(100, 31);
+            nudBlinkMinutes.TabIndex = 4;
             // 
             // rbBeforeAndAfterEnd
             // 
@@ -245,17 +220,40 @@
             rbBeforeAndAfterEnd.Name = "rbBeforeAndAfterEnd";
             rbBeforeAndAfterEnd.Size = new Size(250, 29);
             rbBeforeAndAfterEnd.TabIndex = 3;
-            rbBeforeAndAfterEnd.TabStop = true;
             rbBeforeAndAfterEnd.Text = "Перед и после окончания";
             rbBeforeAndAfterEnd.UseVisualStyleBackColor = true;
             // 
-            // nudBlinkMinutes
+            // rbBeforeEnd
             // 
-            nudBlinkMinutes.Location = new Point(468, 63);
-            nudBlinkMinutes.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            nudBlinkMinutes.Name = "nudBlinkMinutes";
-            nudBlinkMinutes.Size = new Size(100, 31);
-            nudBlinkMinutes.TabIndex = 4;
+            rbBeforeEnd.AutoSize = true;
+            rbBeforeEnd.Location = new Point(15, 65);
+            rbBeforeEnd.Name = "rbBeforeEnd";
+            rbBeforeEnd.Size = new Size(196, 29);
+            rbBeforeEnd.TabIndex = 2;
+            rbBeforeEnd.Text = "Перед окончанием";
+            rbBeforeEnd.UseVisualStyleBackColor = true;
+            // 
+            // rbWhileCounting
+            // 
+            rbWhileCounting.AutoSize = true;
+            rbWhileCounting.Location = new Point(214, 30);
+            rbWhileCounting.Name = "rbWhileCounting";
+            rbWhileCounting.Size = new Size(135, 29);
+            rbWhileCounting.TabIndex = 1;
+            rbWhileCounting.Text = "Пока тикает";
+            rbWhileCounting.UseVisualStyleBackColor = true;
+            // 
+            // rbAfterEnd
+            // 
+            rbAfterEnd.AutoSize = true;
+            rbAfterEnd.Checked = true;
+            rbAfterEnd.Location = new Point(15, 30);
+            rbAfterEnd.Name = "rbAfterEnd";
+            rbAfterEnd.Size = new Size(181, 29);
+            rbAfterEnd.TabIndex = 0;
+            rbAfterEnd.TabStop = true;
+            rbAfterEnd.Text = "После окончания";
+            rbAfterEnd.UseVisualStyleBackColor = true;
             // 
             // FormCountdown
             // 

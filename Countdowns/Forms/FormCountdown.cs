@@ -6,10 +6,14 @@ namespace Countdowns.Forms
     {
         private Countdown EditedCountdown;
 
-        public FormCountdown(Countdown countdown)
+        public FormCountdown()
         {
             InitializeComponent();
+        }
 
+        public FormCountdown(Countdown countdown)
+            : this()
+        {           
             EditedCountdown = countdown;
 
             tbName.Text = countdown.Name;
@@ -40,7 +44,7 @@ namespace Countdowns.Forms
                 case BlinkType.BeforeAndAfterEnd: rbBeforeAndAfterEnd.Checked = true; break;
                 case BlinkType.WhileCounting: rbWhileCounting.Checked = true; break;
             }
-            if (countdown.BlinkMinutes.HasValue) 
+            if (countdown.BlinkMinutes.HasValue)
                 nudBlinkMinutes.Value = countdown.BlinkMinutes.Value;
         }
 
@@ -59,6 +63,10 @@ namespace Countdowns.Forms
 
         private void btOk_Click(object sender, EventArgs e)
         {
+            bool isNew = EditedCountdown == null;
+            if (isNew)
+                EditedCountdown = new Countdown();
+
             EditedCountdown.Name = tbName.Text;
             EditedCountdown.TotalMinutes = chbRegular.Checked ? (int)nudHours.Value * 60 + (int)nudMinutes.Value : null;
             EditedCountdown.EndTime = dtpEndTime.Value;
@@ -73,7 +81,7 @@ namespace Countdowns.Forms
                 EditedCountdown.BlinkType = BlinkType.AfterEnd;
             else if (rbWhileCounting.Checked)
                 EditedCountdown.BlinkType = BlinkType.WhileCounting;
-            else 
+            else
             {
                 EditedCountdown.BlinkMinutes = (int)nudBlinkMinutes.Value;
                 if (rbBeforeEnd.Checked)
@@ -83,6 +91,10 @@ namespace Countdowns.Forms
             }
 
             DialogResult = DialogResult.OK;
+            if (isNew)
+                CountdownsCollection.Add(EditedCountdown);
+            else
+                CountdownsCollection.WasChanged();
             Close();
         }
     }

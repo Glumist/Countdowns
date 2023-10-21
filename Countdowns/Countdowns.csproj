@@ -32,6 +32,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName)$(TargetExt)&quot; &quot;F:\BackUp\Google Drive\Countdowns\$(TargetName)$(TargetExt)&quot;" />
   </Target>

@@ -1,21 +1,31 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace Countdowns.Classes
 {
-    public class Countdown
+    public class Countdown : INotifyPropertyChanged
     {
         private string _name;
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set 
+            { 
+                _name = value;
+                OnPropertyChanged("Name");
+            }
         }
 
         private DateTime _endTime;
         public DateTime EndTime
         {
             get { return _endTime; }
-            set { _endTime = value; }
+            set 
+            { 
+                _endTime = value;
+                OnPropertyChanged("EndTimeString"); 
+            }
         }
 
         public string EndTimeString 
@@ -37,7 +47,11 @@ namespace Countdowns.Classes
         public int? TotalMinutes
         {
             get { return _totalMinutes; }
-            set { _totalMinutes = value; }
+            set 
+            { 
+                _totalMinutes = value;
+                OnPropertyChanged("TotalMinutes");
+            }
         }
 
         private int? _decreaseMinutes;
@@ -96,6 +110,17 @@ namespace Countdowns.Classes
         }
 
         private Color _color = Color.Gray;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         [XmlIgnore]
         public Color Color
         {
@@ -119,6 +144,21 @@ namespace Countdowns.Classes
         public override string ToString()
         {
             return Name;
+        }
+
+        public void Decrease()
+        {
+            if (!DecreaseMinutes.HasValue)
+                return;
+
+            EndTime -= TimeSpan.FromMinutes(DecreaseMinutes.Value);
+        }
+
+        public void Restart()
+        {
+            if (!TotalMinutes.HasValue)
+                return;
+            EndTime = DateTime.Now.AddMinutes(TotalMinutes.Value);
         }
 
         public static int CompareByDate(Countdown a, Countdown b)
@@ -205,7 +245,45 @@ namespace Countdowns.Classes
         {
             GetInstance().Countdowns.Add(countdown);
             GetInstance().Countdowns.Sort(Countdown.CompareByDate);
+            Save();
+            GetInstance().OnCollectionChanged();
         }
+
+        public static void WasChanged()
+        {
+            Save();
+            GetInstance().OnCollectionChanged();
+        }
+
+        public static void Decrease(Countdown countdown)
+        {
+            countdown.Decrease();
+            GetInstance().Countdowns.Sort(Countdown.CompareByDate);
+            Save();
+            GetInstance().OnCollectionChanged();
+        }
+
+        public static void Restart(Countdown countdown)
+        {
+            countdown.Restart();
+            Save();
+            GetInstance().OnCollectionChanged();
+        }
+
+        public static void Delete(Countdown countdown)
+        {
+            GetInstance().Countdowns.Remove(countdown);
+            Save();
+            GetInstance().OnCollectionChanged();
+        }
+
+        public event Action OnCollectionChange = delegate { };
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        protected virtual void OnCollectionChanged()
+        {
+            OnCollectionChange();
+        }
+
     }
 
     public enum BlinkType
