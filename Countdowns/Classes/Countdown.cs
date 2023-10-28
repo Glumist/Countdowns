@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace Countdowns.Classes
 {
-    public class Countdown : INotifyPropertyChanged
+    public class Countdown : INotifyPropertyChanged, IComparable
     {
         private string _name;
         public string Name
@@ -167,6 +167,14 @@ namespace Countdowns.Classes
                 return string.Compare(a.Name, b.Name);
             return DateTime.Compare(a.EndTime, b.EndTime);
         }
+
+        public int CompareTo(object? obj)
+        {
+            Countdown compared = obj as Countdown;
+            if (EndTime == compared.EndTime)
+                return string.Compare(Name, compared.Name);
+            return DateTime.Compare(EndTime, compared.EndTime);
+        }
     }
 
 
@@ -196,7 +204,7 @@ namespace Countdowns.Classes
 
         public static bool Save()
         {
-            GetInstance().Countdowns.Sort(Countdown.CompareByDate);
+            GetInstance().Countdowns.Sort();// (Countdown.CompareByDate);
 
             try
             {
@@ -236,7 +244,7 @@ namespace Countdowns.Classes
                 return new CountdownsCollection();
             }
 
-            result.Countdowns.Sort(Countdown.CompareByDate);
+            result.Countdowns.Sort();// (Countdown.CompareByDate);
 
             return result;
         }
@@ -244,7 +252,7 @@ namespace Countdowns.Classes
         public static void Add(Countdown countdown)
         {
             GetInstance().Countdowns.Add(countdown);
-            GetInstance().Countdowns.Sort(Countdown.CompareByDate);
+            //GetInstance().Countdowns.Sort();// (Countdown.CompareByDate);
             Save();
             GetInstance().OnCollectionChanged();
         }
@@ -258,7 +266,7 @@ namespace Countdowns.Classes
         public static void Decrease(Countdown countdown)
         {
             countdown.Decrease();
-            GetInstance().Countdowns.Sort(Countdown.CompareByDate);
+            //GetInstance().Countdowns.Sort();// (Countdown.CompareByDate);
             Save();
             GetInstance().OnCollectionChanged();
         }
@@ -266,6 +274,7 @@ namespace Countdowns.Classes
         public static void Restart(Countdown countdown)
         {
             countdown.Restart();
+            //GetInstance().Countdowns.Sort();// (Countdown.CompareByDate);
             Save();
             GetInstance().OnCollectionChanged();
         }
@@ -277,11 +286,11 @@ namespace Countdowns.Classes
             GetInstance().OnCollectionChanged();
         }
 
-        public event Action OnCollectionChange = delegate { };
+        public event EventHandler OnCollectionChange;
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected virtual void OnCollectionChanged()
         {
-            OnCollectionChange();
+            OnCollectionChange(this, EventArgs.Empty);
         }
 
     }

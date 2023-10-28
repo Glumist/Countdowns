@@ -1,6 +1,5 @@
 using Countdowns.Classes;
 using Countdowns.Forms;
-using System.Reflection;
 
 namespace Countdowns
 {
@@ -18,10 +17,7 @@ namespace Countdowns
             CountdownsCollection.GetInstance().OnCollectionChange += CountdownsCollection_OnCollectionChange;
         }
 
-        private void CountdownsCollection_OnCollectionChange()
-        {
-            RefreshCountdowns();
-        }
+        private void CountdownsCollection_OnCollectionChange(object sender, EventArgs e) => RefreshCountdowns();        
 
         private void RefreshCountdowns()
         {            
